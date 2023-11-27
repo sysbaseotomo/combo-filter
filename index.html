@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combo Filter</title>
+	<style>
+	 body {
+       background: black;
+     font-family: Arial, sans-serif;
+     color: white;
+   padding: 60px;
+   
+}
+ .container{
+     display:flex;
+     min-height: 70vh;
+     flex-direction:column;
+     align-items: center;
+     justify-content:center;
+}
+ .container .main{
+     display: flex;
+     align-items: end;
+     justify-content:center;
+   
+}
+.container .main .left .domains-chips .domain-chip{
+  background: gray;
+  margin-right: 3px;
+  padding: 2px 5px;
+}
+.container .main .left .domains-chips .domain-chip:hover{
+  background: white;
+  color: black;
+  cursor: pointer;
+}
+.container .main .left .domains-chips{
+  display: flex;
+     align-items: center;
+     justify-content:start;
+}
+ textarea {
+    font-size: 16px;
+   font-weight: bold;
+     background: #FFFFFF;
+     color: black;
+   border: 3px solid #2196F3;
+}
+ #inputTextZero{
+    width: 400px;
+   
+     height: 200px;
+   
+     margin-bottom: 10px;
+     margin-right:20px;
+   padding: 10px;
+}
+ .drop-area {
+     width: 420px;
+     height: 220px;
+     border: 2px dashed white;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     cursor: pointer;
+     margin-bottom: 10px;
+     position: relative;
+   background-color: #0000ff33;
+   font-weight: 500;
+}
+ .drop-area p {
+     margin: 0;
+     z-index: 1000;
+     position: absolute;
+}
+ .drop-area input {
+     margin: 0;
+     position: absolute;
+     pointer-events: none;
+     opacity: 0;
+}
+ .drop-area.active {
+     background-color: rgba(255, 255, 255, 0.1);
+    /* Highlight on dragover */
+}
+
+
+ .drop-area.uploaded {
+     background-color: #4CAF50;
+}
+
+
+ button {
+     margin-bottom: 10px;
+     border: none;
+     padding: 10px 20px;
+    /* Increased padding for better touch interactions */
+     font-size: 16px;
+    /* Slightly smaller font size */
+     background-color: #2196F3;
+    /* Material Design Primary Color */
+     color: white;
+     font-weight: bold;
+     width: 300px;
+     max-width: 300px;
+     border-radius: 20px;
+     box-sizing: border-box;
+    /* Ensure padding and border are included in the total width */
+     transition: background-color 0.3s ease, color 0.3s ease;
+}
+ button:hover {
+     background-color: #1565C0;
+    /* Darker shade on hover */
+     color: #FFF;
+    /* White text on hover */
+      
+     cursor: pointer;
+}
+ button:disabled {
+     opacity: 0.8;
+   background: gray;
+   pointer-events: none;
+    /* Darker shade on hover */
+     color: #FFF;
+   
+    /* White text on hover */
+     cursor: none;
+}
+ #verify-btn {
+   width: 600px !important;
+   max-width: unset;
+}
+ #copy-btn {
+     background-color: green;
+     display: none;
+}
+ #download-btn {
+     background-color: red;
+     display: none;
+}
+ #open-checker{
+     color: #FFFFFFAA;
+     display: none;
+     font-weight:bold;
+}
+ #open-checker:hover{
+     opacity:0.5;
+}
+ #verify-btn{
+     margin-top:20px;
+}
+
+.results{
+  margin-top: 80px;
+}
+.results h3 {
+  font-size: 28px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.results #resultList{
+     
+}
+	</style>
+</head>
+
+
+<body>
+
+<body>
+  <div class="container">
+    <h1>Emails Combo Filter</h1>
+    <div class="main">
+      <div class="left">
+        <div class="domains-chips">
+          <div class="domain-chip" onclick="setDomains('kpn')">kpn</div>
+          <div class="domain-chip" onclick="setDomains('pond')">pond</div>
+          <div class="domain-chip" onclick="setDomains('cloudmark')">cloudmark</div>
+          <div class="domain-chip" onclick="setDomains('xtra')">xtra</div>
+        </div>
+        <textarea id="inputTextZero" placeholder="Enter your domains here (line by line)" rows="10"></textarea>
+      </div>
+    
+    <div class="drop-area" 
+         onclick="triggerFileInput()"
+         ondragover="handleDragOver(event)"
+         ondragenter="handleDragEnter(event)"
+         ondragleave="handleDragLeave(event)"
+         ondrop="handleDrop(event)">
+      <p id="drop-txt">Upload Or Drop Your Combo</p>
+      <input type="file" id="fileInput" accept=".txt" onchange="handleFileSelect(event)">
+    </div>
+    </div>
+    
+    
+    <button id="verify-btn" onclick="verifyEmailDomains()">Verify</button>
+    <div class="actoin-btns">
+      <button id="copy-btn" onclick="copyTextToClipboard()">Copy All</button>
+      <button id="download-btn" onclick="downloadTextFile()">Download File (.txt)</button>
+    </div>
+    <a id="open-checker" href="http://tools.sysbase-app.com:3000/auto_mail_checker" target="_blank">Open Checker</a>
+    
+    <div class="results">
+      <h3 id="res-title">Results</h3>
+    <textarea id="resultList" rows="15" cols="100"></textarea>
+    </div>
+   
+  </div>
+
+</body>
+
+
+   
+   <script>
+    var comboContent = ""   
+document.getElementById("inputTextZero").value = "online.no\nshaw.ca\nsympatico.ca\nhetnet.nl\nbigpond.net\nbigpond.com"
+
+
+
+function setDomains(domainsSet){
+  const domainsList = document.getElementById("inputTextZero");
+  switch(domainsSet){
+    case "kpn":
+      domainsList.value = "kpnmail.nl\nkpnplanet.nl\nplanet.nl\nwxs.nl\nhetnet.nl\nfreeler.nl\nonsbrabantnet.nl\nonsmail.nl\nonsneteindhoven.nl\nonsnetnuenen.nl\ntelfort.nl\ntelfortglasvezel.nl\nxmsweb.nl"
+      break;
+      case "pond":
+      domainsList.value = "bigpond.com\nbigpond.net\nbigpond.net.au"
+      break;
+      case "cloudmark":
+      domainsList.value = "centurylink.net\ncenturylink.com\nshaw.ca\nsympatico.ca\nbigpond.com\nbigpond.net\nbigpond.net.au"
+      break;
+      case "xtra":
+      domainsList.value = "xtra.co.nz"
+      break;
+  }
+}
+
+function triggerFileInput() {
+  document.getElementById("fileInput").click();
+}
+
+    function handleDragOver(event) {
+      event.preventDefault();
+    }
+
+    function handleDragEnter(event) {
+      event.preventDefault();
+      document.querySelector('.drop-area').classList.add('active');
+    }
+
+    function handleDragLeave(event) {
+      event.preventDefault();
+      document.querySelector('.drop-area').classList.remove('active');
+    }
+
+    function handleDrop(event) {
+      event.preventDefault();
+      document.querySelector('.drop-area').classList.remove('active');
+
+      const files = event.dataTransfer.files;
+
+      if (files.length > 0) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const fileContent = e.target.result;
+          comboContent = fileContent;
+          document.getElementById("drop-txt").textContent = "Combo Uploaded!"
+          document.querySelector('.drop-area').classList.add('uploaded');
+        };
+
+        reader.readAsText(files[0]);
+      }
+    }
+
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const fileContent = e.target.result;
+      comboContent = fileContent;
+      document.getElementById("drop-txt").textContent = "Combo Uploaded!"
+      document.querySelector('.drop-area').classList.add('uploaded');
+    };
+
+    reader.readAsText(file);
+  }
+}
+
+function resetAll(){
+   document.getElementById("copy-btn").textContent = "Copy All";
+  document.getElementById("download-btn").textContent = "Download File (.txt)";
+  document.querySelector('.drop-area').classList.remove('active');
+  document.querySelector('.drop-area').classList.remove('uploaded');
+  document.getElementById("drop-txt").textContent = "Upload Or Drop Your Combo"
+   document.getElementById("verify-btn").textContent = "Verify"
+  document.getElementById("verify-btn").disabled = false;
+  
+  
+}
+
+function verifyEmailDomains() {
+
+  
+  if(!comboContent){
+ 
+	alert("Upload your Combo first")
+    return;
+  }
+  
+    	document.getElementById("verify-btn").textContent = "Wait..."
+    document.getElementById("verify-btn").disabled = true;
+     
+      const domainNames = document.getElementById("inputTextZero").value.trim().split("\n");
+      const inputText = comboContent.split('\n').filter(line => line.includes(":") && line.includes("@")).join("\n");
+      const emailPasswordPairs = inputText.split("\n");
+      const resultList = document.getElementById("resultList");
+      resultList.value = "";
+
+	  var resultsOutput = ''
+      emailPasswordPairs.forEach((pair) => {
+        const emailAndPassword = pair.split(":");
+        if (emailAndPassword.length === 2) {
+          const email = emailAndPassword[0];
+          const domain = email.split("@")[1];
+          if (domainNames.includes(domain)) {
+
+            const modifiedText = email + "/" + emailAndPassword[1];
+            resultsOutput = resultsOutput + modifiedText;
+          }
+        }
+      });
+	  
+	  if(!resultsOutput){
+			resultList.value = "Sorry! No results were found!";
+      document.getElementById("res-title").textContent = "Results"
+	  }else{
+      const slashCount = (resultsOutput.match(/\//g) || []).length;
+      document.getElementById("res-title").textContent = slashCount + " Results were found!";
+
+
+			resultList.value = resultsOutput.trim()
+			document.getElementById("copy-btn").style.display = "inline";
+              document.getElementById("download-btn").style.display = "inline";
+              document.getElementById("open-checker").style.display = "inline";
+	  }
+	  
+  
+		resetAll()
+      
+    }
+
+
+
+    function copyTextToClipboard() {
+      const resultList = document.getElementById("resultList");
+      resultList.select();
+      document.execCommand("copy");
+      document.getElementById("copy-btn").textContent = "Copied!";
+    }
+
+
+
+function downloadTextFile() {
+ const resultList = document.getElementById("resultList");
+    const textContent = resultList.value.trim();
+
+ 
+    const blob = new Blob([textContent], { type: 'text/plain' });
+
+ 
+    const link = document.createElement('a');
+
+ 
+    link.href = window.URL.createObjectURL(blob);
+
+ 
+    link.download = 'combo-results.txt';
+
+ 
+    document.body.appendChild(link);
+
+ 
+    link.click();
+
+ 
+    document.body.removeChild(link);
+  document.getElementById("download-btn").textContent = "Downloaded!";
+}
+   </script>
+</body>
+</html>
