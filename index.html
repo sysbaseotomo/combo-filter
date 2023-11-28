@@ -464,6 +464,8 @@ function generateExcel() {
 
   // Add a header row with domain titles
   const headerRow = table.insertRow();
+headerRow.style.backgroundColor = "#D5D5D5"
+	headerRow.style.color = "#FFFFFF"
   for (const domain in groupedLines) {
     const headerCell = headerRow.insertCell();
     headerCell.textContent = domain;
