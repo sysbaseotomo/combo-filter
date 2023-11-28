@@ -37,20 +37,20 @@
 }
 .container .main .left .domains-chips{
   display: flex;
-     align-items: center;
-     justify-content:start;
+  align-items: center;
+  justify-content:start;
 }
  textarea {
-    font-size: 16px;
+   font-size: 16px;
    font-weight: bold;
-     background: #000000;
-     color: white;
+   background: #000000;
+   color: white;
    border: 3px solid #2196F3;
 }
  #inputTextZero{
     width: 400px;
    
-     height: 200px;
+    height: 200px;
    
      margin-bottom: 10px;
      margin-right:20px;
@@ -133,11 +133,15 @@
    max-width: unset;
 }
  #copy-btn {
+	 width: 600px !important;
      background-color: green;
+	 border: 2px green solid;
      display: none;
 }
  #download-btn {
-     background-color: red;
+	 width: 600px !important;
+     
+	 border: 2px red solid;
      display: none;
 }
  #open-checker{
@@ -197,10 +201,10 @@
     
     
     <button id="verify-btn" onclick="verifyEmailDomains()">Verify</button>
-    <div class="actoin-btns">
+   
       <button id="copy-btn" onclick="copyTextToClipboard()">Copy All</button>
       <button id="download-btn" onclick="downloadTextFile()">Download File (.txt)</button>
-    </div>
+   
     <a id="open-checker" href="http://tools.sysbase-app.com:3000/auto_mail_checker" target="_blank">Open Checker</a>
     
     <div class="results">
@@ -307,6 +311,8 @@ function resetAll(){
   document.getElementById("drop-txt").textContent = "Upload Or Drop Your Combo"
    document.getElementById("verify-btn").textContent = "Verify"
   document.getElementById("verify-btn").disabled = false;
+  document.getElementById("copy-btn").style.backgroundColor = "unset";
+	document.getElementById("download-btn").style.backgroundColor = "unset";
   
   
 }
@@ -369,6 +375,7 @@ function verifyEmailDomains() {
       resultList.select();
       document.execCommand("copy");
       document.getElementById("copy-btn").textContent = "Copied!";
+      document.getElementById("copy-btn").style.backgroundColor = "green";
     }
 
 
@@ -398,6 +405,7 @@ function downloadTextFile() {
  
     document.body.removeChild(link);
   document.getElementById("download-btn").textContent = "Downloaded!";
+	document.getElementById("download-btn").style.backgroundColor = "Dowloaded";
 }
    </script>
 </body>
