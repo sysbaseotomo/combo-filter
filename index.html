@@ -226,7 +226,7 @@ font-weight: bold;
      <button id="verify-btn" onclick="verifyEmailDomains()">Verify</button>
      <button id="copy-btn" onclick="copyTextToClipboard()">Copy All</button>
      <button id="download-btn" onclick="downloadTextFile()">Download (TXT File)</button>
-	  <button id="sheet-btn" onclick="generateExcel()">Download (Excel File)</button>
+	 <button id="sheet-btn" onclick="generateExcel()">Download (Excel File)</button>
    
     <a id="open-checker" href="http://tools.sysbase-app.com:3000/auto_mail_checker" target="_blank">Open Checker</a>
     
@@ -444,7 +444,7 @@ function downloadTextFile() {
 
 
 
-	    function generateExcel() {
+function generateExcel() {
   const textareaContent = document.getElementById('resultList').value.trim();
    const lines = textareaContent.split('\n');
 
@@ -495,9 +495,10 @@ function downloadTextFile() {
   // Save the workbook as an Excel file
   XLSX.writeFile(wb, 'output.xlsx');
           
-    document.body.removeChild(table);
+    
   document.getElementById("sheet-btn").textContent = "Downloaded!";
-	document.getElementById("sheet-btn").style.backgroundColor = "green";
+document.getElementById("sheet-btn").style.backgroundColor = "green";
+	 document.body.removeChild(table);
 }
    </script>
 </body>
