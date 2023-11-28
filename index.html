@@ -31,7 +31,7 @@
   padding: 2px 5px;
 }
 .container .main .left .domains-chips .domain-chip:hover{
-  background: white;
+  background: rgb(24, 26, 27);
   color: black;
   cursor: pointer;
 }
@@ -43,8 +43,8 @@
  textarea {
     font-size: 16px;
    font-weight: bold;
-     background: #FFFFFF;
-     color: black;
+     background: #000000;
+     color: white;
    border: 3px solid #2196F3;
 }
  #inputTextZero{
@@ -96,25 +96,25 @@
      margin-bottom: 10px;
      border: none;
      padding: 10px 20px;
-    /* Increased padding for better touch interactions */
+   
      font-size: 16px;
-    /* Slightly smaller font size */
+   
      background-color: #2196F3;
-    /* Material Design Primary Color */
+   
      color: white;
      font-weight: bold;
-     width: 300px;
-     max-width: 300px;
+     width: 600px
+  
      border-radius: 20px;
      box-sizing: border-box;
-    /* Ensure padding and border are included in the total width */
+    
      transition: background-color 0.3s ease, color 0.3s ease;
 }
  button:hover {
      background-color: #1565C0;
-    /* Darker shade on hover */
+    
      color: #FFF;
-    /* White text on hover */
+   
       
      cursor: pointer;
 }
@@ -161,7 +161,7 @@
   margin-bottom: 10px;
 }
 .results #resultList{
-     
+     padding: 10px;
 }
 	</style>
 </head>
@@ -175,6 +175,7 @@
     <div class="main">
       <div class="left">
         <div class="domains-chips">
+		<div class="domain-chip" onclick="setDomains('all')">all</div>
           <div class="domain-chip" onclick="setDomains('kpn')">kpn</div>
           <div class="domain-chip" onclick="setDomains('pond')">pond</div>
           <div class="domain-chip" onclick="setDomains('cloudmark')">cloudmark</div>
@@ -215,13 +216,18 @@
    
    <script>
     var comboContent = ""   
-document.getElementById("inputTextZero").value = "online.no\nshaw.ca\nsympatico.ca\nhetnet.nl\nbigpond.net\nbigpond.com"
+
+	   
+document.getElementById("inputTextZero").value = "shaw.ca\nxtra.co.nz\nonline.no\nearthlink.com\nearthlink.net\nmindspring.com\nev1.net\nix.netcom.com\nsympatico.ca\nbell.net\npeoplepc.com\nmypacks.net\nsprintmail.com\ntelia.se\ntelia.com\nhetnet.nl\nkpnlmail.nl\nplanet.nl\ntelfort.nl\nkpnplanet.nl\nbigpond.com\nbigpond.net.au\nbigpond.com.au"
 
 
 
 function setDomains(domainsSet){
   const domainsList = document.getElementById("inputTextZero");
   switch(domainsSet){
+  	case "all":
+	  domainsList.value = "shaw.ca\nxtra.co.nz\nonline.no\nearthlink.com\nearthlink.net\nmindspring.com\nev1.net\nix.netcom.com\nsympatico.ca\nbell.net\npeoplepc.com\nmypacks.net\nsprintmail.com\ntelia.se\ntelia.com\nhetnet.nl\nkpnlmail.nl\nplanet.nl\ntelfort.nl\nkpnplanet.nl\nbigpond.com\nbigpond.net.au\nbigpond.com.au"
+	  break;
     case "kpn":
       domainsList.value = "kpnmail.nl\nkpnplanet.nl\nplanet.nl\nwxs.nl\nhetnet.nl\nfreeler.nl\nonsbrabantnet.nl\nonsmail.nl\nonsneteindhoven.nl\nonsnetnuenen.nl\ntelfort.nl\ntelfortglasvezel.nl\nxmsweb.nl"
       break;
