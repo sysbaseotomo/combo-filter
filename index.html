@@ -141,10 +141,18 @@ font-weight: bold;
 }
  #copy-btn {
 	 width: 600px !important;
-     background-color: green;
+     
+	 border: 2px white solid;
+     display: none;
+	 background-color: gray;
+	 
+}
+		#sheet {
+	 width: 600px !important;
+     
 	 border: 2px green solid;
      display: none;
-	 background-color: #00ff0055;
+	 background-color: gray;
 	 
 }
 #copy-btn:hover{
@@ -152,7 +160,7 @@ font-weight: bold;
 }
  #download-btn {
 	 width: 600px !important;
-     background-color: #ff000055;
+     background-color: gray;
 	 border: 2px red solid;
      display: none;
 }
@@ -217,7 +225,8 @@ font-weight: bold;
     
      <button id="verify-btn" onclick="verifyEmailDomains()">Verify</button>
      <button id="copy-btn" onclick="copyTextToClipboard()">Copy All</button>
-     <button id="download-btn" onclick="downloadTextFile()">Download File (.txt)</button>
+     <button id="download-btn" onclick="downloadTextFile()">Download (TXT File)</button>
+	  <button id="sheet-btn" onclick="generateExcel()">Download (Excel File)</button>
    
     <a id="open-checker" href="http://tools.sysbase-app.com:3000/auto_mail_checker" target="_blank">Open Checker</a>
     
@@ -319,13 +328,16 @@ function handleFileSelect(event) {
 
 function resetAll(){
    document.getElementById("copy-btn").textContent = "Copy All";
-  document.getElementById("download-btn").textContent = "Download File (.txt)";
+  document.getElementById("download-btn").textContent = "Download (TXT File)";
+	document.getElementById("sheet-btn").textContent = "Download (Excel File)";
   document.querySelector('.drop-area').classList.remove('active');
   document.querySelector('.drop-area').classList.remove('uploaded');
   document.getElementById("drop-txt").textContent = "Upload Or Drop Your Combo"
    document.getElementById("verify-btn").textContent = "Verify"
   document.getElementById("verify-btn").disabled = false;
   document.getElementById("copy-btn").style.backgroundColor = "unset";
+	document.getElementById("sheet-btn").style.backgroundColor = "unset";
+	document.getElementById("copy-btn").style.color = "white";
 	document.getElementById("download-btn").style.backgroundColor = "unset";
   
   
@@ -374,6 +386,7 @@ function verifyEmailDomains() {
 			resultList.value = resultsOutput.trim()
 			document.getElementById("copy-btn").style.display = "inline";
               document.getElementById("download-btn").style.display = "inline";
+		  document.getElementById("sheet-btn").style.display = "inline";
               document.getElementById("open-checker").style.display = "inline";
 	  }
 	  
@@ -389,7 +402,8 @@ function verifyEmailDomains() {
       resultList.select();
       document.execCommand("copy");
       document.getElementById("copy-btn").textContent = "Copied!";
-      document.getElementById("copy-btn").style.backgroundColor = "green";
+      document.getElementById("copy-btn").style.backgroundColor = "white";
+	    document.getElementById("copy-btn").style.color = "black";
     }
 
 
@@ -419,7 +433,7 @@ function downloadTextFile() {
  
     document.body.removeChild(link);
   document.getElementById("download-btn").textContent = "Downloaded!";
-	document.getElementById("download-btn").style.backgroundColor = "Dowloaded";
+	document.getElementById("download-btn").style.backgroundColor = "red";
 }
 
 
@@ -480,7 +494,10 @@ function downloadTextFile() {
 
   // Save the workbook as an Excel file
   XLSX.writeFile(wb, 'output.xlsx');
-         table.remove();
+          
+    document.body.removeChild(table);
+  document.getElementById("sheet-btn").textContent = "Downloaded!";
+	document.getElementById("sheet-btn").style.backgroundColor = "green";
 }
    </script>
 </body>
