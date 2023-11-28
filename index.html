@@ -144,6 +144,7 @@ font-weight: bold;
      background-color: green;
 	 border: 2px green solid;
      display: none;
+	 background-color: #00ff0055;
 	 
 }
 #copy-btn:hover{
@@ -151,7 +152,7 @@ font-weight: bold;
 }
  #download-btn {
 	 width: 600px !important;
-     
+     background-color: #ff000055;
 	 border: 2px red solid;
      display: none;
 }
@@ -214,16 +215,15 @@ font-weight: bold;
     </div>
     
     
-    <button id="verify-btn" onclick="verifyEmailDomains()">Verify</button>
-   
-      <button id="copy-btn" onclick="copyTextToClipboard()">Copy All</button>
-      <button id="download-btn" onclick="downloadTextFile()">Download File (.txt)</button>
+     <button id="verify-btn" onclick="verifyEmailDomains()">Verify</button>
+     <button id="copy-btn" onclick="copyTextToClipboard()">Copy All</button>
+     <button id="download-btn" onclick="downloadTextFile()">Download File (.txt)</button>
    
     <a id="open-checker" href="http://tools.sysbase-app.com:3000/auto_mail_checker" target="_blank">Open Checker</a>
     
     <div class="results">
       <h3 id="res-title">Results</h3>
-    <textarea id="resultList" rows="15" cols="100"></textarea>
+      <textarea id="resultList" rows="15" cols="100"></textarea>
     </div>
    
   </div>
