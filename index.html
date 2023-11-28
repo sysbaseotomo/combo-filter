@@ -331,8 +331,8 @@ function verifyEmailDomains() {
           const domain = email.split("@")[1];
           if (domainNames.includes(domain)) {
 
-            const modifiedText = email + "/" + emailAndPassword[1];
-            resultsOutput = resultsOutput + modifiedText;
+            const modifiedText = email.trim() + "/" + emailAndPassword[1].trim();
+            resultsOutput = resultsOutput + "\n" + modifiedText;
           }
         }
       });
