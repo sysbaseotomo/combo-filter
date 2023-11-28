@@ -421,6 +421,67 @@ function downloadTextFile() {
   document.getElementById("download-btn").textContent = "Downloaded!";
 	document.getElementById("download-btn").style.backgroundColor = "Dowloaded";
 }
+
+
+
+
+
+
+
+
+
+	    function generateExcel() {
+  const textareaContent = document.getElementById('resultList').value.trim();
+   const lines = textareaContent.split('\n');
+
+  
+  const groupedLines = {};
+
+  // Group lines by domain
+  lines.forEach(line => {
+    const domain = line.split('@')[1].split('/')[0]; // Extract domain from the line
+    if (!groupedLines[domain]) {
+      groupedLines[domain] = [];
+    }
+    groupedLines[domain].push(line);
+  });
+
+ const table = document.createElement('table');
+
+  // Add a header row with domain titles
+  const headerRow = table.insertRow();
+  for (const domain in groupedLines) {
+    const headerCell = headerRow.insertCell();
+    headerCell.textContent = domain;
+    headerCell.colSpan = 4;
+  }
+
+  // Add lines below each domain title
+  const maxLines = Math.max(...Object.values(groupedLines).map(lines => lines.length));
+  for (let i = 0; i < maxLines; i++) {
+    const row = table.insertRow();
+    for (const domain in groupedLines) {
+      const lines = groupedLines[domain];
+      const cell = row.insertCell();
+      cell.colSpan = 4;
+      if (i < lines.length) {
+        cell.textContent = lines[i];
+      }
+    }
+  }
+
+  // Display the table on the page
+  ////const outputTableContainer = document.getElementById('outputTableContainer');
+  //outputTableContainer.innerHTML = ''; // Clear previous content
+  //outputTableContainer.appendChild(table);
+
+  // Convert the table to a workbook
+  const wb = XLSX.utils.table_to_book(table);
+
+  // Save the workbook as an Excel file
+  XLSX.writeFile(wb, 'output.xlsx');
+         table.remove();
+}
    </script>
 </body>
 </html>
