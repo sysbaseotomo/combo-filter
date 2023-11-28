@@ -494,6 +494,14 @@ headerRow.style.backgroundColor = "#D5D5D5"
   // Convert the table to a workbook
   const wb = XLSX.utils.table_to_book(table);
 
+
+	
+const titleRow = wb.Sheets.Sheet1[1]; 
+  for (const cell in titleRow) {
+    if (titleRow.hasOwnProperty(cell) && cell.endsWith('1')) {
+      titleRow[cell].s = { fill: { bgColor: { indexed: 9 } } };
+    }
+  }
   // Save the workbook as an Excel file
   XLSX.writeFile(wb, 'output.xlsx');
           
